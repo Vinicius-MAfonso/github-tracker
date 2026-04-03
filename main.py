@@ -5,8 +5,14 @@ from src.api import get_events
 
 def main():
     connection = http.client.HTTPSConnection("api.github.com")
-    user = ""
-    events = get_events(connection, user)
+    parser = argparse.ArgumentParser(
+        prog="github-tracker",
+        description="Show your last events on github"
+    )
+    parser.add_argument("user", action='store')
+    
+    args = parser.parse_args()
+    events = get_events(connection, args.user)
     repo_events = {}
     for event in events:
         if event["repo"]["name"] in repo_events.keys():
