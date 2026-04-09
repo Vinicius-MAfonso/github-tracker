@@ -1,92 +1,82 @@
-# GitHub Activity Tracker
+# GitHub Tracker
 
-A command-line tool to fetch and display the recent activity of any GitHub user using the GitHub API.
-
-## Table of Contents
-
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [API Reference](#api-reference)
-- [Output Examples](#output-examples)
-- [Error Handling](#error-handling)
-- [Advanced Features](#advanced-features)
+A simple command-line tool to display your recent GitHub activity in an easy-to-read format.
 
 ## Features
 
-- Fetch recent activity from any GitHub user
-- Display activity in a readable terminal format
-- Support for various event types (pushes, issues, stars, etc.)
-- Graceful error handling for invalid users and API failures
-- No external dependencies required
-
-## Requirements
-
-- A modern programming language of your choice
-- Internet connection to access GitHub API
-- **No external libraries or frameworks** for API calls (pure language built-ins only)
+- Fetches your recent GitHub events from the GitHub API
+- Groups events by repository
+- Displays a summary of your activities including:
+  - Created repositories
+  - Deleted repositories
+  - Created discussions
+  - Forked repositories
+  - Pushed commits
+  - Starred repositories
 
 ## Installation
 
-1. Clone this repository
-2. Navigate to the project directory
-3. Follow language-specific setup instructions for your chosen implementation
+1. Clone this repository:
+```bash
+git clone https://github.com/yourusername/github-tracker.git
+cd github-tracker
+```
+
+2. No external dependencies required (uses only Python standard library)
 
 ## Usage
 
-Run the CLI with a GitHub username as an argument:
+Run the tracker with a GitHub username:
 
 ```bash
-github-activity <username>
+python main.py <username>
 ```
 
 ### Example
 
 ```bash
-github-activity kamranahmedse
+python main.py torvalds
 ```
 
-## API Reference
-
-### GitHub Events Endpoint
-
-The tool uses the GitHub API events endpoint to fetch user activity:
+This will display output similar to:
 
 ```
-GET https://api.github.com/users/<username>/events
+ - Pushed 5 commits to linux
+ - Starred torvalds/kernel
+ - Created 2 discussions in linux
 ```
 
-Example:
-```
-https://api.github.com/users/kamranahmedse/events
-```
-
-For more details, see the [GitHub API documentation](https://docs.github.com/en/rest/activity/events?apiVersion=2022-11-28).
-
-## Output Examples
+## Project Structure
 
 ```
-- Pushed 3 commits to kamranahmedse/developer-roadmap
-- Opened a new issue in kamranahmedse/developer-roadmap
-- Starred kamranahmedse/developer-roadmap
+github-tracker/
+├── main.py           # Entry point with CLI argument parsing and event processing
+├── src/
+│   ├── __init__.py   # Package initialization
+│   └── api.py        # GitHub API interaction module
+└── readme.md         # This file
 ```
 
-## Error Handling
+## How It Works
 
-The application handles the following error scenarios gracefully:
+1. **API Connection**: Connects to the GitHub API (`api.github.com`)
+2. **Event Fetching**: Retrieves the latest events for the specified user
+3. **Event Organization**: Groups events by repository name
+4. **Output Formatting**: Displays a human-readable summary of activities
 
-- **Invalid username**: Displays a user-friendly error message if the GitHub user doesn't exist
-- **API failures**: Handles network errors and rate limiting appropriately
-- **Empty activity**: Handles users with no recent public activity
+## API Details
 
-## Advanced Features
+Uses the GitHub REST API endpoint:
+```
+GET /users/{user}/events
+```
 
-Consider these enhancements for a more sophisticated implementation:
+## Contributing
 
-- **Filter by event type**: Allow users to filter activity by specific event types (push, pull_request, issues, etc.)
-- **Structured output**: Display activity in formats like JSON or tables
-- **Caching**: Cache fetched data to improve performance and reduce API calls
-- **Additional endpoints**: Explore other GitHub API endpoints for repository information or user statistics
-- **Date filtering**: Show activity within a specific date range
-- **Sorting options**: Sort activity by date, type, or repository
+Feel free to submit issues and enhancement requests!
+
+## License
+
+MIT License
+
+Based on: https://roadmap.sh/projects/github-user-activity
